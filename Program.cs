@@ -11,7 +11,7 @@ namespace DiscountCart
     {
         public static void Main(string[] args)
         {
-            var allDiscounts = new List<IDiscount>()
+            var allDiscounts = new List<IDiscount>
             {
                 new TwoForOneDiscount()
             };
