@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using DiscountCart.Calculators;
+using DiscountCart.Constants;
 using DiscountCart.Discounts;
-using DiscountCart.Helpers;
 using DiscountCart.Models;
 
 namespace DiscountCart
@@ -10,8 +11,8 @@ namespace DiscountCart
     {
         public static void Main(string[] args)
         {
-            var appleProduct = new Product("apple", 10.0);
-            var orangeProduct = new Product("orange", 10.0);
+            var appleProduct = new Product(ApplicationConstants.Apple, 10.0);
+            var orangeProduct = new Product(ApplicationConstants.Orange, 10.0);
             
             var priceCalculator = new PriceCalculator(new List<IDiscount>
             {

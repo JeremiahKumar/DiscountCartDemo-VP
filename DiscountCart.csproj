@@ -50,6 +50,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Constants\ApplicationConstants.cs" />
+        <Compile Include="Constants\ExceptionMessages.cs" />
         <Compile Include="Discounts\TwoForOneDiscount.cs" />
         <Compile Include="Discounts\IDiscount.cs" />
         <Compile Include="Calculators\PriceCalculator.cs" />

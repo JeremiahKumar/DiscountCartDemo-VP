@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using AutoFixture;
 using AutoFixture.Dsl;
+using DiscountCart.Constants;
 using DiscountCart.Models;
 using FluentAssertions;
 using Xunit;
@@ -9,7 +11,6 @@ namespace DiscountCartTests
 {
     public class BasketTests
     {
-        private const string ProductName = "apple";
         private const double ProductValue = 10.0;
         private readonly Basket _sut;
         private readonly IPostprocessComposer<Product> _fixtureBuilder;
@@ -18,7 +19,7 @@ namespace DiscountCartTests
         {
             _sut = new Basket();
             _fixtureBuilder = new Fixture().Build<Product>()
-                .With(a => a.Name, ProductName)
+                .With(a => a.Name, ApplicationConstants.Apple)
                 .With(p => p.Price, ProductValue);
         }
 
@@ -55,7 +56,7 @@ namespace DiscountCartTests
 
             // Act
             _sut.RemoveProduct(product);
-            var result = _sut.Items.Find(p => p.Name == ProductName);
+            var result = _sut.Items.Find(p => p.Name == ApplicationConstants.Apple);
 
             // Assert
             result.Quantity.Should().Be(expected);
@@ -77,6 +78,23 @@ namespace DiscountCartTests
             // Assert
             _sut.Items.Should().BeEmpty();
             _sut.TotalPrice.Should().Be(0);
+        }
+        
+        [Fact]
+        public void AddOrRemove_ThrowsException_WhenProductQuantityIsOverOne()
+        {
+            // Arrange
+            var product = _fixtureBuilder.Create();
+            product.Quantity = 10;
+
+            Action act = () => _sut.AddProduct(product);
+            Action actTwo = () => _sut.RemoveProduct(product);
+
+            // Assert
+            act.Should().Throw<ArgumentException>()
+                .WithMessage(ExceptionMessages.MoreThanOneQuantityException);
+            actTwo.Should().Throw<ArgumentException>()
+                .WithMessage(ExceptionMessages.MoreThanOneQuantityException);
         }
     }
 }

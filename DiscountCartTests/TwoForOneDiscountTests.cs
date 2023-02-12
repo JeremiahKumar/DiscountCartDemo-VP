@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using AutoFixture;
 using AutoFixture.Dsl;
 using DiscountCart.Constants;
@@ -12,7 +12,7 @@ namespace DiscountCartTests
     public class TwoForOneDiscountTests
     {
         private const double ProductValue = 10.0;
-        
+
         private readonly TwoForOneDiscount _sut;
         private readonly IPostprocessComposer<Product> _fixtureBuilder;
 
@@ -20,19 +20,49 @@ namespace DiscountCartTests
         {
             _sut = new TwoForOneDiscount();
             _fixtureBuilder = new Fixture().Build<Product>()
-                .With(p => p.Price, ProductValue)
-                .With(p => p.Quantity, 1);
+                .With(p => p.Price, ProductValue);
         }
 
         [Fact]
-        public void CalculateDiscount_CorrectlyCalculates()
+        public void CalculateDiscount_CorrectlyCalculates_WhenOnlyFirstProductNeedsDeductions()
         {
-            var productList = _fixtureBuilder.With(a => a.Name, ApplicationConstants.Apple).CreateMany(2).ToList();
-            productList.AddRange(_fixtureBuilder.With(a => a.Name, ApplicationConstants.Orange).CreateMany(2));
+            // Arrange
+            var appleProduct = _fixtureBuilder
+                .With(a => a.Name, ApplicationConstants.Apple)
+                .With(p => p.Quantity, 2).Create();
 
-            var result = _sut.CalculateDiscount(productList);
+            var orangeProduct = _fixtureBuilder
+                .With(a => a.Name, ApplicationConstants.Orange)
+                .With(p => p.Quantity, 2).Create();
 
-            result.Should().Be(10.0);
+
+            // Act
+            var resultOne = _sut.CalculateDiscount(new List<Product> { appleProduct, orangeProduct });
+            var resultTwo = _sut.CalculateDiscount(new List<Product> { appleProduct });
+
+            // Assert
+            resultOne.Should().Be(10.0);
+            resultTwo.Should().Be(0);
+        }
+
+        [Fact]
+        public void CalculateDiscount_CorrectlyCalculates_WhenMultipleProductsNeedDeduction()
+        {
+            // Arrange
+            var appleProduct = _fixtureBuilder
+                .With(a => a.Name, ApplicationConstants.Apple)
+                .With(p => p.Quantity, 1).Create();
+
+            var orangeProduct = _fixtureBuilder
+                .With(a => a.Name, ApplicationConstants.Orange)
+                .With(p => p.Quantity, 5).Create();
+
+
+            // Act
+            var resultOne = _sut.CalculateDiscount(new List<Product> { appleProduct, orangeProduct });
+
+            // Assert
+            resultOne.Should().Be(20.0);
         }
     }
 }

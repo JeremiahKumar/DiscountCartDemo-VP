@@ -2,7 +2,8 @@
 
 namespace DiscountCart.Models
 {
-    public class Product : IEquatable<Product> {
+    public class Product : IEquatable<Product>
+    {
         public Product(string name, double price)
         {
             Name = name;
@@ -11,16 +12,21 @@ namespace DiscountCart.Models
 
         public string Name { get; set; }
         public double Price { get; set; }
-        
+
         public int Quantity { get; set; } = 1;
-        
-        public override int GetHashCode() {
+
+        public override int GetHashCode()
+        {
             return Name.GetHashCode();
         }
-        public override bool Equals(object obj) {
+
+        public override bool Equals(object obj)
+        {
             return Equals(obj as Product);
         }
-        public bool Equals(Product obj) {
+
+        public bool Equals(Product obj)
+        {
             return obj != null && obj.Name == Name;
         }
     }

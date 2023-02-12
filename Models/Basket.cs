@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using DiscountCart.Constants;
 
 namespace DiscountCart.Models
 {
@@ -9,9 +11,15 @@ namespace DiscountCart.Models
 
         public void AddProduct(Product product)
         {
+            if (product.Quantity > 1)
+            {
+                throw new ArgumentException(ExceptionMessages.MoreThanOneQuantityException);
+            }
+            
             if (Items.Contains(product))
-            { 
-                Items.Find(p => p.Name == product.Name).Quantity ++;
+            {
+                var item = Items.Find(p => p.Name == product.Name);
+                item.Quantity++;
             }
             else
             {
@@ -23,6 +31,11 @@ namespace DiscountCart.Models
 
         public void RemoveProduct(Product product)
         {
+            if (product.Quantity > 1)
+            {
+                throw new ArgumentException(ExceptionMessages.MoreThanOneQuantityException);
+            }
+            
             if (!Items.Contains(product)) return;
 
             var item = Items.Find(p => p.Name == product.Name);

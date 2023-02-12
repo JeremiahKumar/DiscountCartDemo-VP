@@ -21,7 +21,7 @@ namespace DiscountCart.Discounts
         {
             double discount = 0;
             var itemsToDiscount = applicableProducts.Sum(p => p.Quantity) / MinimumQuantityRequired;
-            
+
             foreach (var product in applicableProducts)
             {
                 if (product.Quantity >= itemsToDiscount)
@@ -29,11 +29,11 @@ namespace DiscountCart.Discounts
                     discount += itemsToDiscount * product.Price;
                     break;
                 }
-                
+
                 discount += product.Quantity * product.Price;
                 itemsToDiscount -= product.Quantity;
             }
-            
+
             return discount;
         }
     }

@@ -3,17 +3,17 @@ using System.Linq;
 using DiscountCart.Discounts;
 using DiscountCart.Models;
 
-namespace DiscountCart.Helpers
+namespace DiscountCart.Calculators
 {
     public class PriceCalculator
     {
         private readonly IEnumerable<IDiscount> _activeDiscounts;
-        
+
         public PriceCalculator(IEnumerable<IDiscount> discounts)
         {
             _activeDiscounts = discounts.Where(d => d.Active);
         }
-        
+
         public double CalculatePrice(Basket basket)
         {
             foreach (var discount in _activeDiscounts)
