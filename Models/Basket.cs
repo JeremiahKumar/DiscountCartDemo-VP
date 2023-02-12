@@ -4,6 +4,7 @@ using DiscountCart.Constants;
 
 namespace DiscountCart.Models
 {
+    //TODO: Implement bulkAdd and bulkRemove. Not implemented here as it is not central to this exercise.
     public class Basket
     {
         public readonly List<Product> Items = new List<Product>();

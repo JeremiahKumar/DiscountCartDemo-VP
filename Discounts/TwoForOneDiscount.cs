@@ -20,18 +20,18 @@ namespace DiscountCart.Discounts
         public double CalculateDiscount(List<Product> applicableProducts)
         {
             double discount = 0;
-            var itemsToDiscount = applicableProducts.Sum(p => p.Quantity) / MinimumQuantityRequired;
+            var quantityToDiscount = applicableProducts.Sum(p => p.Quantity) / MinimumQuantityRequired;
 
             foreach (var product in applicableProducts)
             {
-                if (product.Quantity >= itemsToDiscount)
+                if (product.Quantity >= quantityToDiscount)
                 {
-                    discount += itemsToDiscount * product.Price;
+                    discount += quantityToDiscount * product.Price;
                     break;
                 }
 
                 discount += product.Quantity * product.Price;
-                itemsToDiscount -= product.Quantity;
+                quantityToDiscount -= product.Quantity;
             }
 
             return discount;

@@ -11,20 +11,21 @@ namespace DiscountCart
     {
         public static void Main(string[] args)
         {
-            var appleProduct = new Product(ApplicationConstants.Apple, 10.0);
-            var orangeProduct = new Product(ApplicationConstants.Orange, 10.0);
-            
-            var priceCalculator = new PriceCalculator(new List<IDiscount>
+            var allDiscounts = new List<IDiscount>()
             {
                 new TwoForOneDiscount()
-            });
+            };
+            
+            var priceCalculator = new PriceCalculator(allDiscounts);
             
             var basket = new Basket();
             
-            basket.AddProduct(appleProduct);
-            basket.AddProduct(appleProduct); 
-            basket.AddProduct(orangeProduct);
-            basket.AddProduct(orangeProduct);
+            basket.AddProduct(new Product(ApplicationConstants.Apple, 10.0));
+            basket.AddProduct(new Product(ApplicationConstants.Apple, 10.0)); 
+            basket.AddProduct(new Product(ApplicationConstants.Apple, 10.0)); 
+            basket.AddProduct(new Product(ApplicationConstants.Apple, 10.0)); 
+            basket.AddProduct(new Product(ApplicationConstants.Orange, 10.0));
+            basket.AddProduct(new Product(ApplicationConstants.Orange, 10.0));
 
             var basketPrice = priceCalculator.CalculatePrice(basket);
             Console.WriteLine($"Calculate price for basket is {basketPrice}");

@@ -20,7 +20,8 @@ namespace DiscountCartTests
             _sut = new Basket();
             _fixtureBuilder = new Fixture().Build<Product>()
                 .With(a => a.Name, ApplicationConstants.Apple)
-                .With(p => p.Price, ProductValue);
+                .With(p => p.Price, ProductValue)
+                .With(p => p.Quantity, 1);
         }
 
         [Theory]
@@ -49,13 +50,15 @@ namespace DiscountCartTests
         public void RemoveProduct_DecrementsItemsCorrectly_WhenResultIsNonZero(int quantity, int expected)
         {
             // Arrange
-            var product = _fixtureBuilder.Create();
-            product.Quantity = quantity;
-            _sut.TotalPrice = product.Quantity * ProductValue;
-            _sut.Items.Add(product);
+            var products = _fixtureBuilder.CreateMany(quantity).ToList();
+            
+            foreach (var product in products)
+            {
+                _sut.AddProduct(product);
+            }
 
             // Act
-            _sut.RemoveProduct(product);
+            _sut.RemoveProduct(products[1]);
             var result = _sut.Items.Find(p => p.Name == ApplicationConstants.Apple);
 
             // Assert
@@ -76,6 +79,21 @@ namespace DiscountCartTests
             _sut.RemoveProduct(product);
 
             // Assert
+            _sut.Items.Should().BeEmpty();
+            _sut.TotalPrice.Should().Be(0);
+        }
+        
+        [Fact]
+        public void RemoveProduct_DoesNothing_WhenItemIsNotInBasket()
+        {
+            // Arrange
+            var product = _fixtureBuilder.Create();
+
+            // Act
+            Action act = () => _sut.RemoveProduct(product);
+
+            // Assert
+            act.Should().NotThrow();
             _sut.Items.Should().BeEmpty();
             _sut.TotalPrice.Should().Be(0);
         }
