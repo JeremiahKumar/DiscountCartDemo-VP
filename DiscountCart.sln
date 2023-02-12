@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscountCart", "DiscountCart.csproj", "{8384B3AD-738F-40BC-8E94-414EE2C626D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscountCartTests", "DiscountCartTests\DiscountCartTests.csproj", "{1013885A-3D86-4342-B719-F1FCAFCA3227}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8384B3AD-738F-40BC-8E94-414EE2C626D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8384B3AD-738F-40BC-8E94-414EE2C626D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8384B3AD-738F-40BC-8E94-414EE2C626D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8384B3AD-738F-40BC-8E94-414EE2C626D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1013885A-3D86-4342-B719-F1FCAFCA3227}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1013885A-3D86-4342-B719-F1FCAFCA3227}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1013885A-3D86-4342-B719-F1FCAFCA3227}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1013885A-3D86-4342-B719-F1FCAFCA3227}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
